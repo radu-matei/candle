@@ -83,7 +83,7 @@ impl Config {
 
 // We wrap the `Linear` layer here to add some tracing so that it's easier to profile the resulting
 // model.
-#[derive(Debug)]
+#[derive(Clone, Debug)]
 pub struct Linear {
     inner: candle_nn::Linear,
     span: tracing::Span,
@@ -161,6 +161,7 @@ fn embedding(cfg: &Config, vb: VarBuilder) -> Result<Embedding> {
     Ok(Embedding::new(embeddings, cfg.hidden_size))
 }
 
+#[derive(Clone)]
 struct RmsNorm {
     inner: candle_nn::RmsNorm,
     span: tracing::Span,
@@ -179,6 +180,7 @@ impl RmsNorm {
     }
 }
 
+#[derive(Clone)]
 struct CausalSelfAttention {
     q_proj: Linear,
     k_proj: Linear,
@@ -339,6 +341,7 @@ fn masked_fill(on_false: &Tensor, mask: &Tensor, on_true: f32) -> Result<Tensor>
     Ok(m)
 }
 
+#[derive(Clone)]
 struct Mlp {
     c_fc1: Linear,
     c_fc2: Linear,
@@ -369,6 +372,7 @@ impl Mlp {
     }
 }
 
+#[derive(Clone)]
 struct Block {
     rms_1: RmsNorm,
     attn: CausalSelfAttention,
@@ -408,6 +412,7 @@ impl Block {
     }
 }
 
+#[derive(Clone)]
 pub struct Llama {
     wte: Embedding,
     blocks: Vec<Block>,
