@@ -39,6 +39,7 @@ impl LlamaConfig {
     }
 }
 
+#[derive(Debug, Clone)]
 pub struct Config {
     pub hidden_size: usize,
     pub intermediate_size: usize,
