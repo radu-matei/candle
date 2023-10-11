@@ -691,7 +691,7 @@ impl T5EncoderModel {
     }
 }
 
-#[derive(Debug)]
+#[derive(Clone, Debug)]
 pub struct T5ForConditionalGeneration {
     encoder: T5Stack,
     decoder: T5Stack,
