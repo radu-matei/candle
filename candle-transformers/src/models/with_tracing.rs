@@ -1,7 +1,7 @@
 use candle::{Module, Result, Tensor};
 use candle_nn::VarBuilder;
 
-#[derive(Debug)]
+#[derive(Clone, Debug)]
 pub struct Embedding {
     inner: candle_nn::Embedding,
     span: tracing::Span,
@@ -26,7 +26,7 @@ impl Module for Embedding {
     }
 }
 
-#[derive(Debug)]
+#[derive(Clone, Debug)]
 pub struct Linear {
     inner: candle_nn::Linear,
     span: tracing::Span,
